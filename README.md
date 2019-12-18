@@ -1,37 +1,31 @@
 # Zh-Downloader
 
-这是Chrome插件(亦支持Firefox), 能进行知乎视频嗅探以及下载功能。支持下载为TS格式( MPEG2-TS 格式) 或者 MP4 格式。
+This is a Chrome (and Firefox) plug-in to perform video sniffing and download. Supports download as TS format (MPEG2-TS format) or MP4 format.
 
 
 [![Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chrome.google.com/webstore/detail/zh-downloader/gcknejnpflbcggigdinhahgngfhaomik?utm_source=chrome-ntp-icon)
 
-Firefox 用户请下载 1.0.9 版本以后的zip文件. See [#12](https://github.com/shellvon/zh-downloader/issues/12)
-
-更多介绍/下载信息请访问: [http://von.sh/zh-downloader](http://von.sh/zh-downloader)
 
 
-# 使用说明
+# Dev
 
-下载本代码之后执行 `npm install && npm run build` 之后在 `chrome://extensions/` 中选择"加载已解压的扩展程序" 选择 `dist` 目录即可。
+After downloading this code, run  `npm install && npm run build` and select "Load unpacked extension in chrome `chrome://extensions/` select the `dist` directory.
 
-或者你可以选择已经打包好的CRX/ZIP格式插件(1.0.3开始不再提供CRX,参见 [#6](https://github.com/shellvon/zh-downloader/issues/6) ),可以前往这里下载:[https://github.com/shellvon/zh-downloader/releases/](https://github.com/shellvon/zh-downloader/releases/)
 
-# 技术
+# Dependencies
 
-本次计划使用 Vue，因此选择了 [Kocal/vue-web-extension](https://github.com/Kocal/vue-web-extension) 模版
+ Vue，[Kocal/vue-web-extension](https://github.com/Kocal/vue-web-extension)
 
 + [Vue2.0](https://vuejs.org/)
 + [Element](http://element.eleme.io/#/zh-CN)
 + [m3u8-parser](https://github.com/videojs/m3u8-parser)
-+ [mpegts_to_mp4 魔改版](https://github.com/shellvon/mpegts)
++ [mpegts_to_mp4 (https://github.com/shellvon/mpegts)
 + [mux.js](https://github.com/videojs/mux.js)
 + [vuex-webextensions](https://github.com/MitsuhaKitsune/vuex-webextensions)
 
-# 原理解释
+# Usage
 
-本插件主要由 Popup Script 以及 Background Script 合作完成，参见:[Understanding Google Chrome Extensions](https://gist.github.com/jjperezaguinaga/4243341)
-
-大体步骤:
+General steps:
 
 -  使用 [chrome.webRequest.onBeforeRequest](https://developer.chrome.com/webRequest) 监听所有知乎发起的视频请求，根据简单抓包可以看到知乎当有视频的时候会向这个地址:[https://v.vzuu.com/video/ZHIHU_VIDEO_ID](https://v.vzuu.com/video) 发起请求，其中`ZHIHU_VIDEO_ID`即为知乎视频ID. 之后利用知乎 API: https://lens.zhihu.com/api/videos/ZHIHU_VIDEO_ID 找到视频的 m3u8 地址。
 
@@ -59,13 +53,13 @@ Firefox 用户请下载 1.0.9 版本以后的zip文件. See [#12](https://github
 
 # TODO: 
 
-- [x] 用户可自定义设置
-- [x] 已下载视频增加打开功能
-- [x] 自动删除采集超过一定时间的视频(时间/策略?)
-- [ ] ~~用户忽略某些条件的视频采集(如大小/清晰度/作者/视频名)?~~ (似乎没什么用,此功能不打算实现)
-- [x] ~~直接搜索知乎视频(不知道有API没有)~~ 知乎推荐视频(无法搜索)
-- [x] 修复导出 MP4 格式的问题,无论是 `mux.js` 还是 `mpegts_to_mp4`，任一即可
-- [x] 发布至 Google Chrome 商店[Install from Google Chrome Store](https://chrome.google.com/webstore/detail/zh-downloader/gcknejnpflbcggigdinhahgngfhaomik?utm_source=chrome-ntp-icon)
+- [x] Customizable settings
+- [x] Added open function for downloaded videos
+- [x] Automatically delete videos collected over a certain period of time (time / strategy?)
+- [ ] The user ignores some conditions of video capture (such as size / definition / author / video name)? ~~ (It seems useless, this function is not intended to be implemented)
+- [x] Directly search for Zhihu videos (I don't know if there is an API) Zhihu recommended videos (can't search)
+- [x] Fixed the problem of exporting MP4 format, whether it is `mux.js` or` mpegts_to_mp4`, either
+- [x] Extension for Google Chrome 商店[Install from Google Chrome Store](https://chrome.google.com/webstore/detail/zh-downloader/gcknejnpflbcggigdinhahgngfhaomik?utm_source=chrome-ntp-icon)
 
 # Change Logs
 
